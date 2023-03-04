@@ -1,6 +1,6 @@
-# toonflix
+# Toonflix
 
-A new Flutter project.
+Webtoon Netflix
 
 ## Getting Started
 
