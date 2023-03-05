@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:toonflix/models/webtoon_model.dart';
 import 'package:toonflix/services/api_service.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+import '../widgets/webtoon_widget.dart';
 
+class HomeScreen extends StatelessWidget {
   final Future<List<WebtoonModel>> webtoons = ApiService.getTodaysToons();
+
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,8 @@ class HomeScreen extends StatelessWidget {
         title: const Text(
           "오늘의 웹툰",
           style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w400,
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -55,32 +57,10 @@ class HomeScreen extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         var webtoon = snapshot.data![index];
-        return Column(
-          children: [
-            Container(
-              width: 250,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 15,
-                        offset: const Offset(10, 10),
-                        color: Colors.black.withOpacity(0.5))
-                  ]),
-              clipBehavior: Clip.hardEdge,
-              child: Image.network(webtoon.thumb, headers: const {
-                "User-Agent":
-                    "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-              }),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              webtoon.title,
-              style: const TextStyle(
-                fontSize: 22,
-              ),
-            ),
-          ],
+        return Webtoon(
+          title: webtoon.title,
+          thumb: webtoon.thumb,
+          id: webtoon.id,
         );
       },
       separatorBuilder: (context, index) => const SizedBox(
